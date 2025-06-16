@@ -1,0 +1,737 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>TenM-Hub - Payment Behavior Predictor</title>
+
+  <style>
+
+    body {
+
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      margin: 40px;
+
+      background-color: #f9fafc;
+
+      color: #333;
+
+    }
+
+
+
+    h1, h2 {
+
+      color: white;
+
+    }
+
+
+
+    .section {
+
+      background-color: #ffffff;
+
+      border-radius: 12px;
+
+      padding: 24px;
+
+      margin-bottom: 30px;
+
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+      max-width: 600px;
+
+    }
+
+
+
+    label {
+
+      display: block;
+
+      margin-top: 16px;
+
+      font-weight: 600;
+
+      color: #333;
+
+    }
+
+
+
+    input {
+
+      padding: 10px 12px;
+
+      width: 100%;
+
+      margin-top: 6px;
+
+      margin-bottom: 16px;
+
+      border-radius: 8px;
+
+      border: 1px solid #ccc;
+
+      font-size: 1rem;
+
+    }
+
+
+
+    button {
+
+      padding: 10px 24px;
+
+      background-color: #007bff;
+
+      color: #fff;
+
+      border: none;
+
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      margin-right: 10px;
+
+      font-weight: bold;
+
+    }
+
+
+
+    button:hover {
+
+      background-color: #0056b3;
+
+    }
+
+
+
+    .result {
+
+      margin-top: 20px;
+
+      font-weight: bold;
+
+      color: white;
+
+      font-size: 1.1rem;
+
+      padding: 16px;
+
+      background-color: #008b8b;
+
+      border-radius: 10px;
+
+      text-align: center;
+
+    }
+
+
+
+    .title-container {
+
+      background-color: #008b8b;
+
+      padding: 20px;
+
+      border-radius: 12px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+
+    .title-container h1 {
+
+      margin: 0;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="title-container">
+
+    <h1>TenM-Hub: Payment Behavior Predictor</h1>
+
+  </div>
+
+
+
+  <div class="section">
+
+    <h2>Tenant Payment Risk Assessment</h2>
+
+    <label>Past Payment Timeliness (0 - 1):
+
+      <input type="number" id="timeliness" step="0.01" min="0" max="1" placeholder="e.g. 0.85">
+
+    </label>
+
+    <label>Monthly Rent (KES):
+
+      <input type="number" id="rent" placeholder="e.g. 35000">
+
+    </label>
+
+    <button onclick="predictPayment()">Predict Payment Behavior</button>
+
+    <button onclick="clearFields()">Clear</button>
+
+    <div id="predictionResult" class="result"></div>
+
+  </div>
+
+
+
+  <script>
+
+    function predictPayment() {
+
+      const timeliness = parseFloat(document.getElementById('timeliness').value);
+
+      const rent = parseFloat(document.getElementById('rent').value);
+
+
+
+      if (isNaN(timeliness) || isNaN(rent)) {
+
+        document.getElementById('predictionResult').innerText = "Please fill all fields correctly.";
+
+        return;
+
+      }
+
+
+
+      let score = timeliness * 0.7;
+
+
+
+      if (rent < 20000) score += 0.3;
+
+      else if (rent < 50000) score += 0.15;
+
+      else score += 0.05;
+
+
+
+      let result = "High Risk of Late Payment";
+
+      if (score >= 0.8) result = "Low Risk of Late Payment";
+
+      else if (score >= 0.6) result = "Moderate Risk of Late Payment";
+
+
+
+      document.getElementById('predictionResult').innerText = result;
+
+    }
+
+
+
+    function clearFields() {
+
+      document.getElementById('timeliness').value = '';
+
+      document.getElementById('rent').value = '';
+
+      document.getElementById('predictionResult').innerText = '';
+
+    }
+
+  </script>
+
+</body>
+
+</html>
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TenM-Hub | Cost Calculator</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        :root {
+
+            --tenmhub-primary: #2c3e50;
+
+            --tenmhub-secondary: #3498db;
+
+            --tenmhub-accent: #e74c3c;
+
+        }
+
+
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background-color: White;
+
+        }
+
+
+
+        .calculator-container {
+
+            background: darkcyan;
+
+            border-radius: 10px;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+            max-width: 800px;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .calculator-header {
+
+            background: var(--tenmhub-primary);
+
+            color: white;
+
+            padding: 20px;
+
+            text-align: center;
+
+        }
+
+
+
+        .form-control, .form-select {
+
+            border-radius: 5px;
+
+            padding: 12px 15px;
+
+            border: 1px solid #ddd;
+
+            margin-bottom: 15px;
+
+            height: 50px;
+
+        }
+
+
+
+        .btn-primary {
+
+            background-color: var(--tenmhub-secondary);
+
+            border: none;
+
+            padding: 12px;
+
+            font-weight: 600;
+
+            width: 100%;
+
+            height: 50px;
+
+        }
+
+
+
+        .result-card {
+
+            border-left: 4px solid var(--tenmhub-secondary);
+
+            background-color: #F3E5AB;
+
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-radius: 5px;
+
+        }
+
+
+
+        .form-label {
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+            display: block;
+
+        }
+
+
+
+        .equal-height {
+
+            display: flex;
+
+            flex-direction: column;
+
+            height: 100%;
+
+        }
+
+
+
+        .equal-height .form-label {
+
+            flex: 0 0 auto;
+
+        }
+
+
+
+        .equal-height .form-control,
+
+        .equal-height .form-select {
+
+            flex: 1 0 auto;
+
+        }
+
+
+
+        .btn-clear {
+
+            background-color: var(--tenmhub-accent);
+
+            color: white;
+
+            border: none;
+
+            padding: 12px;
+
+            font-weight: 600;
+
+            width: 100%;
+
+            height: 50px;
+
+            margin-top: 10px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <div class="calculator-container">
+
+            <div class="calculator-header">
+
+                <h2><i class="fas fa-calculator me-2"></i> TenM-Hub Cost Calculator</h2>
+
+                <p class="mb-0">Estimate your management fees</p>
+
+            </div>
+
+
+
+            <div class="p-4">
+
+                <form id="calculatorForm">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="equal-height">
+
+                                <label for="units" class="form-label">Number of Units</label>
+
+                                <input type="number" class="form-control" id="units" min="1" value="1" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="equal-height">
+
+                                <label for="property_type" class="form-label">Property Type</label>
+
+                                <select class="form-select" id="property_type" required>
+
+                                    <option value="apartment">Apartment</option>
+
+                                    <option value="townhouse">Townhouse</option>
+
+                                    <option value="vacant_land">Vacant Land</option>
+
+                                    <option value="commercial">Commercial</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="equal-height">
+
+                                <label for="average_rent" class="form-label">Average Monthly Rent (KES)</label>
+
+                                <input type="number" class="form-control" id="average_rent" min="1" value="20000" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="equal-height">
+
+                                <label for="location" class="form-label">Location in Nairobi</label>
+
+                                <select class="form-select" id="location" required>
+
+                                    <option value="">Select a location...</option>
+
+                                    <option value="Westlands">Westlands</option>
+
+                                    <option value="Kilimani">Kilimani</option>
+
+                                    <option value="Karen">Karen</option>
+
+                                    <option value="Runda">Runda</option>
+
+                                    <option value="Lavington">Lavington</option>
+
+                                    <option value="CBD">Nairobi CBD</option>
+
+                                    <option value="South B">South B</option>
+
+                                    <option value="South C">South C</option>
+
+                                    <option value="Roysambu">Roysambu</option>
+
+                                    <option value="Other">Other (Specify)</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-primary btn-lg mt-3">
+
+                        <i class="fas fa-calculator me-2"></i> Calculate Fees
+
+                    </button>
+
+                </form>
+
+
+
+                <div id="results" class="result-card" style="display: none;">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <h4>Estimated Fees</h4>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <span>Monthly Fee:</span>
+
+                                <strong id="monthly-fee" class="fs-4">KES 0.00</strong>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <span>Annual Fee:</span>
+
+                                <strong id="annual-fee" class="fs-4">KES 0.00</strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h4>Calculation Details</h4>
+
+                            <ul class="list-unstyled">
+
+                                <li><span class="me-2">Base Fee:</span> <span id="base-fee">KES 0 (0 units)</span></li>
+
+                                <li><span class="me-2">Location:</span> <span id="location-name">N/A</span></li>
+
+                                <li><span class="me-2">Property Type:</span> <span id="property-type">N/A</span></li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <button class="btn-clear" onclick="clearResults()">
+
+                        <i class="fas fa-eraser me-2"></i> Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+
+            e.preventDefault();
+
+
+
+            const units = parseInt(document.getElementById('units').value);
+
+            const propertyType = document.getElementById('property_type').value;
+
+            const averageRent = parseFloat(document.getElementById('average_rent').value);
+
+            const location = document.getElementById('location').value;
+
+
+
+            let baseFee;
+
+            if (units <= 5) {
+
+                baseFee = units * 200;
+
+            } else if (units <= 10) {
+
+                baseFee = units * 180;
+
+            } else {
+
+                baseFee = units * 170;
+
+            }
+
+
+
+            baseFee = Math.max(baseFee, 1500);
+
+
+
+            let propertyAdjustment = 1.0;
+
+            if (propertyType === 'townhouse') propertyAdjustment = 1.15;
+
+            else if (propertyType === 'vacant_land') propertyAdjustment = 0.7;
+
+            else if (propertyType === 'commercial') propertyAdjustment = 1.3;
+
+
+
+            let locationAdjustment = 1.0;
+
+            if (['Westlands', 'Kilimani', 'Karen', 'Runda', 'Lavington'].includes(location)) {
+
+                locationAdjustment = 1.1;
+
+            }
+
+
+
+            const monthlyFee = baseFee * propertyAdjustment * locationAdjustment;
+
+            const annualFee = monthlyFee * 12;
+
+
+
+            document.getElementById('results').style.display = 'block';
+
+            document.getElementById('monthly-fee').textContent = `KES ${monthlyFee.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+            document.getElementById('annual-fee').textContent = `KES ${annualFee.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+            document.getElementById('base-fee').textContent = `KES ${baseFee.toLocaleString()} (${units} units)`;
+
+            document.getElementById('location-name').textContent = location;
+
+            document.getElementById('property-type').textContent = propertyType.charAt(0).toUpperCase() + propertyType.slice(1);
+
+
+
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+        });
+
+
+
+        function clearResults() {
+
+            document.getElementById('calculatorForm').reset();
+
+            document.getElementById('results').style.display = 'none';
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+<a href="TenM-HubCalculator.html" target="_blank">Download TenM-HubCalculator.html</a>
+<a href="c:\Users\PC\Documents\TenM-HubCalculator.html" target="_blank">Download TenM-HubCalculator.html</a>
+<iframe src="c:\Users\PC\Documents\TenM-HubCalculator.html" width="100%" height="600px"></iframe>
